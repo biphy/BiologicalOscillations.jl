@@ -1,0 +1,41 @@
+name: Maintain branch with visualization features disabled
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+env:
+  BRANCH_NAME: temp-workaround/disable-visualization
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Sync to main branch
+        run: |
+          git config user.name "Github Actions"
+          git config user.email ""
+          git checkout main
+          git pull
+          git checkout ${{ env.BRANCH_NAME }} || git checkout -b ${{ env.BRANCH_NAME }}
+          git merge origin/main
+
+      - name: Remove visualization-related features
+        run: |
+          rm src/draw_utilities.jl test/draw_test.jl
+          rm -rf test/draw_connectivity
+          find . -regextype posix-extended -regex ".*.(jl|toml)" -exec sed -i "/.*#!DISABLEABLE$/d" {} \;
+
+      - name: Update branch
+        run: |
+          git add -A
+          git commit -m "Remove visualization-related features"
+          git push origin ${{ env.BRANCH_NAME }}
