@@ -7,3 +7,4 @@ using Test
 @testset "Network Utilities" begin include("network_utilities_tests.jl") end
 @testset "Model Simulation" begin include("simulation_tests.jl") end
 @testset "Connectivity Visualization" begin include("draw_tests.jl") end #!DISABLEABLE
+
