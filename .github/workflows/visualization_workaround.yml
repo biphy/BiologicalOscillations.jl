@@ -23,9 +23,11 @@ jobs:
         run: |
           git config user.name "Github Actions"
           git config user.email ""
+          git push -d origin ${{ env.BRANCH_NAME }} || true
+          git branch -d ${{ env.BRANCH_NAME }} || true
           git checkout main
           git pull
-          git checkout ${{ env.BRANCH_NAME }} || git checkout -b ${{ env.BRANCH_NAME }}
+          git checkout -b ${{ env.BRANCH_NAME }}
           git merge origin/main
 
       - name: Remove visualization-related features
