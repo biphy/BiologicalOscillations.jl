@@ -30,7 +30,7 @@ jobs:
 
       - name: Remove visualization-related features
         run: |
-          rm src/draw_utilities.jl test/draw_test.jl
+          rm src/draw_utilities.jl test/draw_tests.jl
           rm -rf test/draw_connectivity
           find . -regextype posix-extended -regex ".*.(jl|toml)" -exec sed -i "/.*#!DISABLEABLE$/d" {} \;
 
