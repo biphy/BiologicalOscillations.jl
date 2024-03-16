@@ -40,4 +40,3 @@ guan_2008 = @reaction_network Guan_2008 begin
     # Cdk1 deactivation by Wee1
     sqrt(r)*(a_W + hillr(abs(C), b_W, K_W, n_W)), C --> ∅
 end
-
